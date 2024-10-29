@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment"
     android:padding="16dp"
-    android:background="#7FCED8">
+    android:background="#7FCED8"
+    android:tag="home_fr">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -29,7 +30,9 @@
         android:layout_height="50dp"
         android:background="#DEEAEC"
         android:layout_below="@id/tvLabelPhone"
-        android:id="@+id/edtPhone"/>
+        android:id="@+id/edtPhone"
+        android:inputType="phone"
+        android:paddingStart="10dp"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,4 +41,43 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:id="@+id/btnCallPhone"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/url_website"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:layout_below="@id/btnCallPhone"
+        android:id="@+id/tvUrl"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:paddingStart="10dp"
+        android:layout_below="@id/tvUrl"
+        android:inputType="textUri"
+        android:id="@+id/edtURL"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/load_website"
+        android:layout_below="@id/edtURL"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/btnURLWebsite"/>
+    <Button
+        android:layout_marginTop="30dp"
+        android:id="@+id/open_bottom_sheet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Modal Bottom Sheet"
+        android:layout_below="@id/btnURLWebsite"
+        android:layout_centerInParent="true"/>
+    <!--recycler view for displaying our courses-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRVCourses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/open_bottom_sheet"
+        android:layout_marginTop="20dp"/>
 </RelativeLayout>

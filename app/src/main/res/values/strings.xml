@@ -110,4 +110,12 @@
     <string name="enter_phone_number">Enter phone number</string>
     <string name="phone_number">Phone number</string>
     <string name="call_phone">Call phone</string>
+    <string name="others">Others</string>
+    <string name="open_nav">Open Navigation</string>
+    <string name="close_nav">Close Navigation</string>
+    <string name="reports">Reports</string>
+    <string name="reports_page">Reports page</string>
+    <string name="url_website">URL website</string>
+    <string name="load_website">Load Website</string>
+    <string name="products_list">Products List</string>
 </resources>

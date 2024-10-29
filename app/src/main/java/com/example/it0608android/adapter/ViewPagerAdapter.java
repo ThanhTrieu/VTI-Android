@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.it0608android.BudgetFragment;
 import com.example.it0608android.HomeFragment;
+import com.example.it0608android.ReportsFragment;
 import com.example.it0608android.SettingsFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
@@ -24,6 +25,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             return new BudgetFragment();
         } else if (position == 2) {
             return new SettingsFragment();
+        } else if (position == 3) {
+            return new ReportsFragment();
         } else {
             return new HomeFragment();
         }
@@ -31,6 +34,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

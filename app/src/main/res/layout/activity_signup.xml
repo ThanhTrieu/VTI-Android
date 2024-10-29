@@ -17,17 +17,49 @@
         android:textSize="24sp"/>
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:background="#DBE5E6"
+        android:paddingStart="5dp"
         android:hint="Enter Username"
         android:inputType="text"
         android:layout_marginTop="10dp"
         android:id="@+id/edtUser"/>
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:background="#DBE5E6"
+        android:paddingStart="5dp"
         android:hint="Enter Password"
         android:inputType="textPassword"
-        android:id="@+id/edtPass"/>
+        android:id="@+id/edtPass"
+        android:layout_marginTop="8dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#DBE5E6"
+        android:paddingStart="5dp"
+        android:hint="Enter Email"
+        android:inputType="textEmailAddress"
+        android:id="@+id/edtEmail"
+        android:layout_marginTop="8dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#DBE5E6"
+        android:paddingStart="5dp"
+        android:hint="Enter Phone"
+        android:inputType="phone"
+        android:id="@+id/edtPhone"
+        android:layout_marginTop="8dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Enter Address"
+        android:inputType="text"
+        android:id="@+id/edtAddress"
+        android:background="#DBE5E6"
+        android:paddingStart="5dp"
+        android:layout_marginTop="8dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +76,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cancel"/>
+            android:text="Submit"
+            android:id="@+id/btnSubmitAccount"/>
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"

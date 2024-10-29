@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp">
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imgProduct"
+        android:src="@drawable/logo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BH8685653"
+        android:textSize="20sp"
+        android:layout_toEndOf="@id/imgProduct"
+        android:layout_marginStart="15dp"
+        android:id="@+id/idProduct"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iphone 16 pro max"
+        android:textSize="20sp"
+        android:layout_toEndOf="@id/imgProduct"
+        android:layout_below="@id/idProduct"
+        android:layout_marginStart="15dp"
+        android:id="@+id/nameProduct"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="40000000"
+        android:textSize="20sp"
+        android:layout_toEndOf="@id/imgProduct"
+        android:layout_below="@id/nameProduct"
+        android:layout_marginStart="15dp"
+        android:id="@+id/priceProduct"
+        />
+</RelativeLayout>
