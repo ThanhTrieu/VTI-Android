@@ -8,11 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.example.it0608android.model.CourseModal;
+import com.example.it0608android.model.TestModel;
 
 import java.util.ArrayList;
 
-public class CourseDB extends SQLiteOpenHelper {
+public class TestDB extends SQLiteOpenHelper {
     // creating a constant variables for our database.
     // below variable is for our database name.
     private static final String DB_NAME = "course_db";
@@ -37,7 +37,7 @@ public class CourseDB extends SQLiteOpenHelper {
 
     // below variable is for our course tracks column.
     private static final String TRACKS_COL = "tracks";
-    public CourseDB(@Nullable Context context) {
+    public TestDB(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -93,7 +93,7 @@ public class CourseDB extends SQLiteOpenHelper {
         db.close();
     }
     // we have created a new method for reading all the courses.
-    public ArrayList<CourseModal> readCourses() {
+    public ArrayList<TestModel> readCourses() {
         // on below line we are creating a
         // database for reading our database.
         SQLiteDatabase db = this.getReadableDatabase();
@@ -102,13 +102,13 @@ public class CourseDB extends SQLiteOpenHelper {
         Cursor cursorCourses = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
         // on below line we are creating a new array list.
-        ArrayList<CourseModal> courseModalArrayList = new ArrayList<>();
+        ArrayList<TestModel> courseModalArrayList = new ArrayList<>();
 
         // moving our cursor to first position.
         if (cursorCourses.moveToFirst()) {
             do {
                 // on below line we are adding the data from cursor to our array list.
-                courseModalArrayList.add(new CourseModal(cursorCourses.getString(1),
+                courseModalArrayList.add(new TestModel(cursorCourses.getString(1),
                         cursorCourses.getString(4),
                         cursorCourses.getString(2),
                         cursorCourses.getString(3)));

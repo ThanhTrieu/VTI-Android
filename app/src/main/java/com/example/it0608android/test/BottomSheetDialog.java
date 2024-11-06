@@ -1,7 +1,6 @@
 package com.example.it0608android.test;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +11,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.it0608android.MenuActivity;
 import com.example.it0608android.R;
-import com.example.it0608android.database.CourseDB;
+import com.example.it0608android.database.TestDB;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class BottomSheetDialog extends BottomSheetDialogFragment {
-    CourseDB courseDB;
+    TestDB courseDB;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,7 +32,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         EditText courseDescriptionEdt = v.findViewById(R.id.idEdtCourseDescription);
         Button addCourses = v.findViewById(R.id.idBtnAddCourse);
         Button viewAllCourses = v.findViewById(R.id.idBtnReadCourse);
-        courseDB = new CourseDB(getActivity());
+        courseDB = new TestDB(getActivity());
 
         // below line is to add on click listener for our add course button.
         addCourses.setOnClickListener(new View.OnClickListener() {

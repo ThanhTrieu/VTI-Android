@@ -1,13 +1,17 @@
 package com.example.it0608android.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+
+import com.example.it0608android.model.UserModel;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -76,8 +80,67 @@ public class UserDB extends SQLiteOpenHelper {
         values.put(PHONE_COL, phone);
         values.put(ADDRESS_COL, address);
         values.put(CREATED_AT, dateNow);
-        return db.insert(TABLE_NAME, null, values);
+        long add =  db.insert(TABLE_NAME, null, values);
+        db.close();
+        return add;
     }
 
+    @SuppressLint("Range")
+    public UserModel getInfoUser(String username, String password){
+        UserModel user = new UserModel();
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            // tao mang chua cac cot du lieu can lay thong tin
+            String[] columns = { ID_COL, USERNAME_COL, EMAIL_COL, PHONE_COL, ADDRESS_COL };
+            // Select ID_COL, USERNAME_COL, EMAIL_COL, PHONE_COL, ADDRESS_COL from users
+            // where USERNAME_COL = "?" and PASSWORD_COL = "?"
+            String condition = USERNAME_COL + " =? " + " AND " + PASSWORD_COL + " =? ";
+            String[] params = { username, password };
+            Cursor cursor = db.query(TABLE_NAME, columns, condition, params, null, null, null);
+            if (cursor.getCount() > 0){
+                cursor.moveToFirst(); // lay ra 1 row data dau tien
+                // do du lieu vao model
+                user.setId(cursor.getInt(cursor.getColumnIndex(ID_COL)));
+                user.setUsername(cursor.getString(cursor.getColumnIndex(USERNAME_COL)));
+                user.setEmail(cursor.getString(cursor.getColumnIndex(EMAIL_COL)));
+                user.setPhone(cursor.getString(cursor.getColumnIndex(PHONE_COL)));
+                user.setAddress(cursor.getString(cursor.getColumnIndex(ADDRESS_COL)));
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
 
+    public boolean checkUsernameEmail(String data, int type){
+        boolean checking = false;
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            String[] columns = { ID_COL, USERNAME_COL, EMAIL_COL, PHONE_COL, ADDRESS_COL };
+            String condition = (type == 1) ? (USERNAME_COL + " =? ") : (EMAIL_COL + " =? ");
+            String[] params = { data };
+            Cursor cursor = db.query(TABLE_NAME, columns, condition, params, null, null, null);
+            if (cursor.getCount() > 0) {
+                checking = true;
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return checking;
+    }
+    public int updatePassword(String user, String email, String newPassword){
+        // thuc hanh cau lenh update SQLite
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PASSWORD_COL, newPassword);
+        String condition = USERNAME_COL + " =? " + " AND " + EMAIL_COL + " =? ";
+        String[] params = { user, email };
+        int update = db.update(TABLE_NAME, values, condition, params);
+        db.close();
+        return update;
+    }
 }

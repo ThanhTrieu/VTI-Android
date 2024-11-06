@@ -66,6 +66,17 @@ public class SignupActivity extends AppCompatActivity {
                     edtPhone.setError("Phone can not empty");
                     return;
                 }
+                boolean checkUsername = userDB.checkUsernameEmail(user, 1);
+                boolean checkEmail    = userDB.checkUsernameEmail(email, 2);
+                if (checkUsername){
+                    Toast.makeText(SignupActivity.this, "Username Exists", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (checkEmail){
+                    Toast.makeText(SignupActivity.this, "Email Exists", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 long insert = userDB.addNewUser(user, pass, email, phone, address);
                 if (insert == -1){
                     Toast.makeText(SignupActivity.this, "signup Fail", Toast.LENGTH_SHORT).show();

@@ -1,6 +1,6 @@
 package com.example.it0608android.model;
 
-public class CourseModal {
+public class TestModel {
     // variables for our coursename,
     // description, tracks and duration, id.
     private String courseName;
@@ -50,10 +50,10 @@ public class CourseModal {
     public void setId(int id) { this.id = id; }
 
     // constructor
-    public CourseModal(String courseName,
-                       String courseDuration,
-                       String courseTracks,
-                       String courseDescription)
+    public TestModel(String courseName,
+                     String courseDuration,
+                     String courseTracks,
+                     String courseDescription)
     {
         this.courseName = courseName;
         this.courseDuration = courseDuration;

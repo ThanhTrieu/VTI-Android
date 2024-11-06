@@ -20,8 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.it0608android.adapter.CourseRVAdapter;
-import com.example.it0608android.database.CourseDB;
-import com.example.it0608android.model.CourseModal;
+import com.example.it0608android.database.TestDB;
+import com.example.it0608android.model.TestModel;
 import com.example.it0608android.test.BottomSheetDialog;
 
 import java.util.ArrayList;
@@ -37,8 +37,8 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private ArrayList<CourseModal> courseModalArrayList;
-    private CourseDB dbHandler;
+    private ArrayList<TestModel> courseModalArrayList;
+    private TestDB dbHandler;
     private CourseRVAdapter courseRVAdapter;
     private RecyclerView coursesRV;
 
@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment {
         });
 
         courseModalArrayList = new ArrayList<>();
-        dbHandler = new CourseDB(getActivity());
+        dbHandler = new TestDB(getActivity());
 
         // getting our course array
         // list from db handler class.

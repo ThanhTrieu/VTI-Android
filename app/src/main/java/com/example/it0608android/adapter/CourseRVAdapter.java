@@ -10,17 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.it0608android.R;
-import com.example.it0608android.model.CourseModal;
+import com.example.it0608android.model.TestModel;
 
 import java.util.ArrayList;
 
 public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.ViewHolder>{
     // variable for our array list and context
-    ArrayList<CourseModal> courseModalArrayList;
+    ArrayList<TestModel> courseModalArrayList;
     Context context;
 
     // constructor
-    public CourseRVAdapter(ArrayList<CourseModal> courseModalArrayList, Context context) {
+    public CourseRVAdapter(ArrayList<TestModel> courseModalArrayList, Context context) {
         this.courseModalArrayList = courseModalArrayList;
         this.context = context;
     }
@@ -38,7 +38,7 @@ public class CourseRVAdapter extends RecyclerView.Adapter<CourseRVAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // on below line we are setting data
         // to our views of recycler view item.
-        CourseModal modal = courseModalArrayList.get(position);
+        TestModel modal = courseModalArrayList.get(position);
         holder.courseNameTV.setText(modal.getCourseName());
         holder.courseDescTV.setText(modal.getCourseDescription());
         holder.courseDurationTV.setText(modal.getCourseDuration());
