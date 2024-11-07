@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.it0608android.BudgetFragment;
 import com.example.it0608android.HomeFragment;
+import com.example.it0608android.ProfileFragment;
 import com.example.it0608android.ReportsFragment;
 import com.example.it0608android.SettingsFragment;
 
@@ -26,7 +27,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         } else if (position == 2) {
             return new SettingsFragment();
         } else if (position == 3) {
-            return new ReportsFragment();
+            return new ProfileFragment();
         } else {
             return new HomeFragment();
         }

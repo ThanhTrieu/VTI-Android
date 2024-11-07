@@ -69,6 +69,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     viewPager2.setCurrentItem(1);
                 } else if (menuItem.getItemId() == R.id.setting_menu) {
                     viewPager2.setCurrentItem(2);
+                } else if (menuItem.getItemId() == R.id.profile_menu) {
+                    viewPager2.setCurrentItem(3);
                 }
                 return true;
             }
@@ -94,6 +96,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     bottomNavigationView.getMenu().findItem(R.id.budget_menu).setChecked(true);
                 } else if (position == 2) {
                     bottomNavigationView.getMenu().findItem(R.id.setting_menu).setChecked(true);
+                } else if (position == 3) {
+                    bottomNavigationView.getMenu().findItem(R.id.profile_menu).setChecked(true);
                 } else {
                     bottomNavigationView.getMenu().findItem(R.id.home_menu).setChecked(true);
                 }
@@ -114,7 +118,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             viewPager2.setCurrentItem(1);
         } else if (item.getItemId() == R.id.setting_menu) {
             viewPager2.setCurrentItem(2);
-        } else if (item.getItemId() == R.id.report_menu) {
+        } else if (item.getItemId() == R.id.profile_menu) {
             viewPager2.setCurrentItem(3);
         } else {
             viewPager2.setCurrentItem(0);
