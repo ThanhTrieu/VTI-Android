@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+
+import com.example.it0608android.BottomSheetDialog.ExpenseBottomSheet;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +62,18 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        ImageButton imgButton = view.findViewById(R.id.btnAddExpense);
+
+        imgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExpenseBottomSheet bottomSheet = new ExpenseBottomSheet();
+                bottomSheet.show(getActivity().getSupportFragmentManager(),
+                        "ExpenseBottomSheet");
+            }
+        });
+
+        return view;
     }
 }
