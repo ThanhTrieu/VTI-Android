@@ -2,11 +2,31 @@ package com.example.it0608android;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.it0608android.adapter.DemoRVAdapter;
+import com.example.it0608android.model.DemoModel;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.Types;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +79,48 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        // Khởi tạo RecyclerView.
+        RecyclerView rvUsers = view.findViewById(R.id.idRVUsers);
+        rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // Khởi tạo OkHttpClient để lấy dữ liệu.
+        OkHttpClient client = new OkHttpClient();
+
+        // Khởi tạo Moshi adapter để biến đổi json sang model java (ở đây là User)
+        Moshi moshi = new Moshi.Builder().build();
+        Type usersType = Types.newParameterizedType(List.class, DemoModel.class);
+        final JsonAdapter<List<DemoModel>> jsonAdapter = moshi.adapter(usersType);
+
+        // Tạo request lên server.
+        Request request = new Request.Builder()
+                .url("https://api.github.com/users")
+                .build();
+
+        // Thực thi request.
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("Error", "Network Error");
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+                // Lấy thông tin JSON trả về. Bạn có thể log lại biến json này để xem nó như thế nào.
+                assert response.body() != null;
+                String json = response.body().string();
+                final List<DemoModel> users = jsonAdapter.fromJson(json);
+
+                // Cho hiển thị lên RecyclerView.
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        rvUsers.setAdapter(new DemoRVAdapter(users, getActivity()));
+                    }
+                });
+            }
+        });
+        return view;
     }
 }
