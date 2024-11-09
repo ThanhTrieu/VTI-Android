@@ -1,8 +1,11 @@
 package com.example.it0608android.adapter;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,12 +14,16 @@ import com.example.it0608android.model.Products;
 import com.squareup.picasso.Picasso;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductListAdapter extends BaseAdapter {
+public class ProductListAdapter extends BaseAdapter implements Filterable {
     public List<Products> products;
-    public ProductListAdapter(List<Products> items){
+    public List<Products> searchPd;
+    public Context context;
+    public ProductListAdapter(Context context, List<Products> items){
         super();
+        this.context = context;
         this.products = items;
     }
     @Override
@@ -56,5 +63,40 @@ public class ProductListAdapter extends BaseAdapter {
 
 
         return viewProductList;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                final FilterResults oReturn = new FilterResults();
+                final List<Products> results = new ArrayList<>();
+                if (searchPd == null) {
+                    searchPd = products;
+                }
+                if (constraint != null) {
+                    if (searchPd != null && !searchPd.isEmpty()) {
+                        for (final Products g : searchPd) {
+                            if (g.getName().toLowerCase()
+                                    .contains(constraint.toString()))
+                                results.add(g);
+                        }
+                    }
+                    oReturn.values = results;
+                }
+                return oReturn;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                products = (List<Products>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 }

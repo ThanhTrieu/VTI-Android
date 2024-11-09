@@ -4,12 +4,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.it0608android.adapter.ProductListAdapter;
@@ -23,8 +24,10 @@ import java.util.List;
  * Use the {@link BudgetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BudgetFragment extends Fragment {
+public class BudgetFragment extends Fragment implements android.widget.SearchView.OnQueryTextListener {
 
+    ListView listView;
+    SearchView mSearchView;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,14 +73,19 @@ public class BudgetFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_budget, container, false);
-        ListView listView = view.findViewById(R.id.lvProductList);
+        listView = view.findViewById(R.id.lvProductList);
+        mSearchView = view.findViewById(R.id.searchView);
+
         List<Products> productsList = new ArrayList<>();
         productsList.add(new Products(1, "Iphone 16 pro max", "https://cdn.tgdd.vn/Products/Images/42/329149/iphone-16-pro-max-tu-nhien-thumb-600x600.jpg", 34900000));
         productsList.add(new Products(2, "Iphone 16 pro", "https://cdn.tgdd.vn/Products/Images/42/329143/iphone-16-pro-titan-tu-nhien.png", 28900000));
         productsList.add(new Products(3, "Iphone 16 Plus", "https://cdn.tgdd.vn/Products/Images/42/329138/iphone-16-plus-xanh-thumb-600x600.jpg", 25900000));
         productsList.add(new Products(4, "Iphone 16", "https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-gold-thumbnew-600x600.jpg", 24900000));
-        ProductListAdapter productListAdapter = new ProductListAdapter(productsList);
+        ProductListAdapter productListAdapter = new ProductListAdapter(getActivity(), productsList);
         listView.setAdapter(productListAdapter);
+
+        listView.setTextFilterEnabled(true);
+        setupSearchView();
 
         listView.setClickable(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -90,5 +98,27 @@ public class BudgetFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void setupSearchView() {
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setOnQueryTextListener((SearchView.OnQueryTextListener) this);
+        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setQueryHint("Search Here");
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (TextUtils.isEmpty(newText)) {
+            listView.clearTextFilter();
+        } else {
+            listView.setFilterText(newText);
+        }
+        return true;
     }
 }

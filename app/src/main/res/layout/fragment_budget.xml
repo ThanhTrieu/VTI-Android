@@ -14,9 +14,17 @@
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:id="@+id/tvTitle"/>
+
+    <SearchView
+        android:layout_below="@id/tvTitle"
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search Contacts"
+        android:iconifiedByDefault="true" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tvTitle"
+        android:layout_below="@id/searchView"
         android:id="@+id/lvProductList"/>
 </RelativeLayout>
