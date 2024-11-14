@@ -3,6 +3,8 @@ package com.example.it0608android;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.it0608android.BottomSheetDialog.ExpenseBottomSheet;
+import com.example.it0608android.adapter.ExpenseAdapter;
+import com.example.it0608android.database.ExpenseDB;
+import com.example.it0608android.model.ExpenseModel;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +33,11 @@ public class SettingsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ArrayList<ExpenseModel> expenseModelArrayList;
+    private ExpenseAdapter expenseAdapter;
+    private ExpenseDB expenseDB;
+    private RecyclerView expenseRV;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -64,6 +76,7 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ImageButton imgButton = view.findViewById(R.id.btnAddExpense);
+        expenseRV = view.findViewById(R.id.rvExpense);
 
         imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +86,13 @@ public class SettingsFragment extends Fragment {
                         "ExpenseBottomSheet");
             }
         });
-
+        expenseModelArrayList = new ArrayList<>();
+        expenseDB = new ExpenseDB(getActivity());
+        expenseModelArrayList = expenseDB.getListExpenses();
+        expenseAdapter = new ExpenseAdapter(expenseModelArrayList, getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        expenseRV.setLayoutManager(linearLayoutManager);
+        expenseRV.setAdapter(expenseAdapter);
         return view;
     }
 }

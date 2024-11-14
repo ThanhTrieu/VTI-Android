@@ -1,7 +1,9 @@
 package com.example.it0608android.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
@@ -9,8 +11,11 @@ import android.os.Build;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.example.it0608android.model.ExpenseModel;
+
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class ExpenseDB extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "expense_db";
@@ -61,5 +66,33 @@ public class ExpenseDB extends SQLiteOpenHelper {
         long insert = db.insert(TABLE_NAME, null, values);
         db.close();
         return insert;
+    }
+
+    @SuppressLint("Range")
+    public ArrayList<ExpenseModel> getListExpenses(){
+        ArrayList<ExpenseModel> expensesArrayList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursorQuery = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        if(cursorQuery != null && cursorQuery.getCount() > 0) {
+            if (cursorQuery.moveToFirst()) {
+                do {
+                    expensesArrayList.add(
+                        new ExpenseModel(
+                            cursorQuery.getInt(cursorQuery.getColumnIndex(ID_COL)),
+                            cursorQuery.getString(cursorQuery.getColumnIndex(NAME_COL)),
+                            cursorQuery.getInt(cursorQuery.getColumnIndex(PRICE_COL)),
+                            cursorQuery.getString(cursorQuery.getColumnIndex(DESCRIPTION_COL)),
+                            cursorQuery.getString(cursorQuery.getColumnIndex(CREATED_AT_COL)),
+                            cursorQuery.getString(cursorQuery.getColumnIndex(UPDATED_AT_COL))
+                        )
+                    );
+                } while (cursorQuery.moveToNext());
+            }
+        }
+
+        assert cursorQuery != null;
+        cursorQuery.close();
+        db.close();
+        return expensesArrayList;
     }
 }

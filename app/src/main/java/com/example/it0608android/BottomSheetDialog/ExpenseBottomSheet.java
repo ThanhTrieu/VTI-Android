@@ -1,6 +1,7 @@
 package com.example.it0608android.BottomSheetDialog;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.it0608android.MenuActivity;
 import com.example.it0608android.R;
 import com.example.it0608android.database.ExpenseDB;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -61,6 +63,8 @@ public class ExpenseBottomSheet extends BottomSheetDialogFragment {
                     edtMoney.setText("");
                     edtDescription.setText("");
                     dismiss(); // close
+                    Intent intent = new Intent(getActivity(), MenuActivity.class);
+                    startActivity(intent);
                 }
             }
         });
