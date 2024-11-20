@@ -19,6 +19,14 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseI
     public Context context;
     public OnClickListener onClickListener;
 
+    public interface OnClickListener {
+        void onClick(int position);
+    }
+    // setter for interface
+    public void setOnClickListener(OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
+    }
+
     public ExpenseAdapter(ArrayList<ExpenseModel> expenses, Context context){
         this.expenseModels = expenses;
         this.context = context;
@@ -38,9 +46,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseI
         holder.tvPriceExpense.setText(String.valueOf(model.getPrice()));
         holder.tvDesExpense.setText(model.getDescription());
 
-        // Set click listener on the item view
         holder.itemView.setOnClickListener(view -> {
-            if (onClickListener != null) {
+            if (onClickListener != null){
                 onClickListener.onClick(position);
             }
         });
@@ -51,16 +58,6 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseI
         return expenseModels.size();
     }
 
-
-    // Setter for the click listener
-    public void setOnClickListener(OnClickListener onClickListener) {
-        this.onClickListener =  onClickListener;
-    }
-
-    // Interface for the click listener
-    public interface OnClickListener {
-        void onClick(int position);
-    }
     public class ExpenseItemViewHolder extends RecyclerView.ViewHolder{
         TextView tvNameExpense, tvPriceExpense, tvDesExpense;
         View itemView;
@@ -70,10 +67,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseI
             tvNameExpense = itemView.findViewById(R.id.tvNameExpense);
             tvPriceExpense = itemView.findViewById(R.id.tvPriceExpense);
             tvDesExpense = itemView.findViewById(R.id.tvDesExpense);
-
-            // Set click listener on the ViewHolder's item view
             itemView.setOnClickListener(view -> {
-                if (onClickListener != null) {
+                if (onClickListener != null){
                     onClickListener.onClick(getAdapterPosition());
                 }
             });

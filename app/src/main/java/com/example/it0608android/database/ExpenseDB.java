@@ -53,7 +53,7 @@ public class ExpenseDB extends SQLiteOpenHelper {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public long addNewExpense(String name, int price, String description){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         ZonedDateTime now = ZonedDateTime.now();
         String dateNow = dtf.format(now);
 
@@ -66,6 +66,25 @@ public class ExpenseDB extends SQLiteOpenHelper {
         long insert = db.insert(TABLE_NAME, null, values);
         db.close();
         return insert;
+    }
+
+    @SuppressLint("NewApi")
+    public int updateExpense(String name, int price, String description, int id){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        ZonedDateTime now = ZonedDateTime.now();
+        String dateNow = dtf.format(now);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(NAME_COL, name);
+        values.put(PRICE_COL, price);
+        values.put(DESCRIPTION_COL, description);
+        values.put(UPDATED_AT_COL, dateNow);
+        String condition = ID_COL + " =? ";
+        String[] params = { String.valueOf(id) };
+        int result = db.update(TABLE_NAME, values, condition, params);
+        db.close();
+        return  result;
     }
 
     @SuppressLint("Range")

@@ -96,6 +96,7 @@ public class SettingsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         expenseRV.setLayoutManager(linearLayoutManager);
         expenseRV.setAdapter(expenseAdapter);
+
         expenseAdapter.setOnClickListener(new ExpenseAdapter.OnClickListener() {
             @Override
             public void onClick(int position) {
@@ -103,9 +104,9 @@ public class SettingsFragment extends Fragment {
                 ExpenseBottomSheet bottomSheet = new ExpenseBottomSheet(expenseModel, expenseModel.getId());
                 bottomSheet.show(getActivity().getSupportFragmentManager(),
                         "ExpenseBottomSheet");
-                Log.i("TEST_FK", String.valueOf(expenseModel.getId()));
             }
         });
+
         return view;
     }
 }

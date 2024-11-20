@@ -26,10 +26,9 @@ public class ExpenseBottomSheet extends BottomSheetDialogFragment {
     ExpenseDB expenseDB;
     ExpenseModel expenseModel;
     private int id;
-
-    public ExpenseBottomSheet(ExpenseModel expense, int idEx){
-        expenseModel = expense;
-        id = idEx;
+    public ExpenseBottomSheet(ExpenseModel model, int idExpense){
+        this.expenseModel = model;
+        this.id = idExpense;
     }
 
     @Nullable
@@ -45,7 +44,8 @@ public class ExpenseBottomSheet extends BottomSheetDialogFragment {
         EditText edtMoney = view.findViewById(R.id.edtPriceExpense);
         EditText edtDescription = view.findViewById(R.id.edtDescriptionExpense);
         expenseDB = new ExpenseDB(getActivity());
-        //view edit
+
+        // update Expense
         if (id > 0){
             edtName.setText(expenseModel.getName());
             edtMoney.setText(String.valueOf(expenseModel.getPrice()));
@@ -71,21 +71,39 @@ public class ExpenseBottomSheet extends BottomSheetDialogFragment {
                     return;
                 }
                 int priceEx = Integer.parseInt(price);
-                long insert = expenseDB.addNewExpense(name, priceEx, description);
-                if (insert == -1){
-                    Toast.makeText(getActivity(), "Insert Failure", Toast.LENGTH_SHORT).show();
+                if (id > 0){
+                    // update
+                    int update = expenseDB.updateExpense(name, priceEx, description, id);
+                    if (update == -1){
+                        // update failed
+                        Toast.makeText(getActivity(), "Update Expense Failure", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // update successful
+                        Toast.makeText(getActivity(), "Update Expense Successful", Toast.LENGTH_SHORT).show();
+                        edtName.setText("");
+                        edtMoney.setText("");
+                        edtDescription.setText("");
+                        dismiss(); // close
+                        Intent intent = new Intent(getActivity(), MenuActivity.class);
+                        startActivity(intent);
+                    }
                 } else {
-                    Toast.makeText(getActivity(), "Insert Successfully", Toast.LENGTH_SHORT).show();
-                    edtName.setText("");
-                    edtMoney.setText("");
-                    edtDescription.setText("");
-                    dismiss(); // close
-                    Intent intent = new Intent(getActivity(), MenuActivity.class);
-                    startActivity(intent);
+                    // insert
+                    long insert = expenseDB.addNewExpense(name, priceEx, description);
+                    if (insert == -1){
+                        Toast.makeText(getActivity(), "Insert Failure", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Insert Successfully", Toast.LENGTH_SHORT).show();
+                        edtName.setText("");
+                        edtMoney.setText("");
+                        edtDescription.setText("");
+                        dismiss(); // close
+                        Intent intent = new Intent(getActivity(), MenuActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
-
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,8 +113,6 @@ public class ExpenseBottomSheet extends BottomSheetDialogFragment {
                 dismiss(); // close
             }
         });
-
-
         return view;
     }
 }
