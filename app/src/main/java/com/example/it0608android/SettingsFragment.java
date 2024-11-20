@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.it0608android.BottomSheetDialog.ExpenseBottomSheet;
 import com.example.it0608android.adapter.ExpenseAdapter;
@@ -38,6 +40,7 @@ public class SettingsFragment extends Fragment {
     private ExpenseAdapter expenseAdapter;
     private ExpenseDB expenseDB;
     private RecyclerView expenseRV;
+    private ExpenseModel expenseModel;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -81,7 +84,7 @@ public class SettingsFragment extends Fragment {
         imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ExpenseBottomSheet bottomSheet = new ExpenseBottomSheet();
+                ExpenseBottomSheet bottomSheet = new ExpenseBottomSheet(expenseModel, 0);
                 bottomSheet.show(getActivity().getSupportFragmentManager(),
                         "ExpenseBottomSheet");
             }
@@ -93,6 +96,16 @@ public class SettingsFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         expenseRV.setLayoutManager(linearLayoutManager);
         expenseRV.setAdapter(expenseAdapter);
+        expenseAdapter.setOnClickListener(new ExpenseAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position) {
+                expenseModel = expenseModelArrayList.get(position);
+                ExpenseBottomSheet bottomSheet = new ExpenseBottomSheet(expenseModel, expenseModel.getId());
+                bottomSheet.show(getActivity().getSupportFragmentManager(),
+                        "ExpenseBottomSheet");
+                Log.i("TEST_FK", String.valueOf(expenseModel.getId()));
+            }
+        });
         return view;
     }
 }

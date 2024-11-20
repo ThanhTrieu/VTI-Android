@@ -17,10 +17,21 @@ import androidx.annotation.Nullable;
 import com.example.it0608android.MenuActivity;
 import com.example.it0608android.R;
 import com.example.it0608android.database.ExpenseDB;
+import com.example.it0608android.model.ExpenseModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import java.util.ArrayList;
 
 public class ExpenseBottomSheet extends BottomSheetDialogFragment {
     ExpenseDB expenseDB;
+    ExpenseModel expenseModel;
+    private int id;
+
+    public ExpenseBottomSheet(ExpenseModel expense, int idEx){
+        expenseModel = expense;
+        id = idEx;
+    }
+
     @Nullable
     @Override
     @SuppressLint("NewApi")
@@ -34,6 +45,12 @@ public class ExpenseBottomSheet extends BottomSheetDialogFragment {
         EditText edtMoney = view.findViewById(R.id.edtPriceExpense);
         EditText edtDescription = view.findViewById(R.id.edtDescriptionExpense);
         expenseDB = new ExpenseDB(getActivity());
+        //view edit
+        if (id > 0){
+            edtName.setText(expenseModel.getName());
+            edtMoney.setText(String.valueOf(expenseModel.getPrice()));
+            edtDescription.setText(expenseModel.getDescription());
+        }
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

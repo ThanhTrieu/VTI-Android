@@ -1,6 +1,8 @@
 package com.example.it0608android.model;
 
-public class ExpenseModel {
+import java.io.Serializable;
+
+public class ExpenseModel implements Serializable {
     public int id;
     public String name;
     public int price;

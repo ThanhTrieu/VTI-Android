@@ -12,6 +12,7 @@ navigationUi = "2.6.0"
 okhttp = "3.12.1"
 picasso = "3"
 picassoVersion = "2.8"
+lifecycleExtensions = "2.2.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -27,6 +28,7 @@ okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 picasso = { module = "com.squareup.picasso:picasso" }
 picasso-v28 = { module = "com.squareup.picasso:picasso", version.ref = "picassoVersion" }
 squareup-picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
+lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version.ref = "lifecycleExtensions" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
