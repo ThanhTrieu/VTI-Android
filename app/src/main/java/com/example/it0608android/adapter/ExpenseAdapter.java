@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.it0608android.R;
-import com.example.it0608android.database.ExpenseDB;
 import com.example.it0608android.model.ExpenseModel;
 
 import java.util.ArrayList;
