@@ -24,10 +24,10 @@ import java.util.List;
  * Use the {@link BudgetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BudgetFragment extends Fragment implements android.widget.SearchView.OnQueryTextListener {
+public class BudgetFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     ListView listView;
-    SearchView mSearchView;
+    SearchView searchView;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,7 +74,8 @@ public class BudgetFragment extends Fragment implements android.widget.SearchVie
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_budget, container, false);
         listView = view.findViewById(R.id.lvProductList);
-        mSearchView = view.findViewById(R.id.searchView);
+        searchView = view.findViewById(R.id.searchView);
+
 
         List<Products> productsList = new ArrayList<>();
         productsList.add(new Products(1, "Iphone 16 pro max", "https://cdn.tgdd.vn/Products/Images/42/329149/iphone-16-pro-max-tu-nhien-thumb-600x600.jpg", 34900000));
@@ -100,11 +101,11 @@ public class BudgetFragment extends Fragment implements android.widget.SearchVie
         return view;
     }
 
-    private void setupSearchView() {
-        mSearchView.setIconifiedByDefault(false);
-        mSearchView.setOnQueryTextListener((SearchView.OnQueryTextListener) this);
-        mSearchView.setSubmitButtonEnabled(true);
-        mSearchView.setQueryHint("Search Here");
+    private void setupSearchView(){
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener((SearchView.OnQueryTextListener) this);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setQueryHint("Search here ...");
     }
 
     @Override
@@ -114,7 +115,7 @@ public class BudgetFragment extends Fragment implements android.widget.SearchVie
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if (TextUtils.isEmpty(newText)) {
+        if (TextUtils.isEmpty(newText)){
             listView.clearTextFilter();
         } else {
             listView.setFilterText(newText);
