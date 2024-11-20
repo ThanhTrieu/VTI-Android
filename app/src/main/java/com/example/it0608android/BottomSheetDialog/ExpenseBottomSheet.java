@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class ExpenseBottomSheet extends BottomSheetDialogFragment {
     ExpenseDB expenseDB;
     ExpenseModel expenseModel;
-    private int id;
+    private final int id;
     public ExpenseBottomSheet(ExpenseModel model, int idExpense){
         this.expenseModel = model;
         this.id = idExpense;
