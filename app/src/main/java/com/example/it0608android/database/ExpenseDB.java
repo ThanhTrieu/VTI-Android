@@ -114,9 +114,13 @@ public class ExpenseDB extends SQLiteOpenHelper {
         db.close();
         return expensesArrayList;
     }
-    public void deleteExpense(int id) {
+
+    public void deleteExpenseById(int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        int result = db.delete(TABLE_NAME, ID_COL + "=?", new String[]{String.valueOf(id)});
+        String condition = ID_COL + " =? ";
+        String[] params = { String.valueOf(id) };
+        db.delete(TABLE_NAME, condition, params);
         db.close();
+        // delete from expense where id = ?
     }
 }

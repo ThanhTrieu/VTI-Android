@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.it0608android.adapter.DemoRVAdapter;
-import com.example.it0608android.model.DemoModel;
+import com.example.it0608android.adapter.GithubUserAdapter;
+import com.example.it0608android.model.GithubUserModel;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
@@ -21,6 +21,7 @@ import com.squareup.moshi.Types;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -80,43 +81,32 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        // Khởi tạo RecyclerView.
         RecyclerView rvUsers = view.findViewById(R.id.idRVUsers);
         rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        // Khởi tạo OkHttpClient để lấy dữ liệu.
         OkHttpClient client = new OkHttpClient();
-
-        // Khởi tạo Moshi adapter để biến đổi json sang model java (ở đây là User)
         Moshi moshi = new Moshi.Builder().build();
-        Type usersType = Types.newParameterizedType(List.class, DemoModel.class);
-        final JsonAdapter<List<DemoModel>> jsonAdapter = moshi.adapter(usersType);
+        Type usersType = Types.newParameterizedType(List.class, GithubUserModel.class);
+        final JsonAdapter<List<GithubUserModel>> jsonAdapter = moshi.adapter(usersType);
 
-        // Tạo request lên server.
-        Request request = new Request.Builder()
-                .url("https://api.github.com/users")
-                .build();
-
-        // Thực thi request.
+        Request request = new Request.Builder().url("https://api.github.com/users").build();
+        // call data from api
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("Error", "Network Error");
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.i("ERROR_API", Objects.requireNonNull(e.getMessage()));
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-
-                // Lấy thông tin JSON trả về. Bạn có thể log lại biến json này để xem nó như thế nào.
                 assert response.body() != null;
                 String json = response.body().string();
-                final List<DemoModel> users = jsonAdapter.fromJson(json);
-
-                // Cho hiển thị lên RecyclerView.
+                final List<GithubUserModel> dataUsers = jsonAdapter.fromJson(json);
+                // view to RV
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        rvUsers.setAdapter(new DemoRVAdapter(users, getActivity()));
+                        rvUsers.setAdapter(new GithubUserAdapter(dataUsers, getActivity()));
                     }
                 });
             }
