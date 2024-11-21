@@ -2,7 +2,9 @@ package com.example.it0608android;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +19,7 @@ import com.example.it0608android.BottomSheetDialog.ExpenseBottomSheet;
 import com.example.it0608android.adapter.ExpenseAdapter;
 import com.example.it0608android.database.ExpenseDB;
 import com.example.it0608android.model.ExpenseModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -106,6 +109,52 @@ public class SettingsFragment extends Fragment {
                         "ExpenseBottomSheet");
             }
         });
+
+        // delete item
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                // this method is called
+                // when the item is moved.
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                // this method is called when we swipe our item to right direction.
+                // on below line we are getting the item at a particular position.
+                expenseModel = expenseModelArrayList.get(viewHolder.getAdapterPosition());
+                // delete item database
+                expenseDB.deleteExpense(expenseModel.getId());
+
+                // below line is to get the position
+                // of the item at that position.
+                int position = viewHolder.getAdapterPosition();
+
+                // this method is called when item is swiped.
+                // below line is to remove item from our array list.
+                expenseModelArrayList.remove(viewHolder.getAdapterPosition());
+
+                // below line is to notify our item is removed from adapter.
+                expenseAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
+                // below line is to display our snackbar with action.
+                Snackbar.make(expenseRV, expenseModel.getName(), Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // adding on click listener to our action of snack bar.
+                        // below line is to add our item to array list with a position.
+                        expenseModelArrayList.add(position, expenseModel);
+
+                        // below line is to notify item is
+                        // added to our adapter class.
+                        expenseAdapter.notifyItemInserted(position);
+                    }
+                }).show();
+            }
+            // at last we are adding this
+            // to our recycler view.
+        }).attachToRecyclerView(expenseRV);
 
         return view;
     }
