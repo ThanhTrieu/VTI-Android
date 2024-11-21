@@ -1,5 +1,6 @@
 package com.example.it0608android;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -124,8 +125,6 @@ public class SettingsFragment extends Fragment {
                 // this method is called when we swipe our item to right direction.
                 // on below line we are getting the item at a particular position.
                 expenseModel = expenseModelArrayList.get(viewHolder.getAdapterPosition());
-                // delete item database
-                expenseDB.deleteExpense(expenseModel.getId());
 
                 // below line is to get the position
                 // of the item at that position.
@@ -138,8 +137,12 @@ public class SettingsFragment extends Fragment {
                 // below line is to notify our item is removed from adapter.
                 expenseAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
+                // delete item database
+                expenseDB.deleteExpense(expenseModel.getId());
+
                 // below line is to display our snackbar with action.
                 Snackbar.make(expenseRV, expenseModel.getName(), Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                    @SuppressLint("NewApi")
                     @Override
                     public void onClick(View v) {
                         // adding on click listener to our action of snack bar.
@@ -149,6 +152,8 @@ public class SettingsFragment extends Fragment {
                         // below line is to notify item is
                         // added to our adapter class.
                         expenseAdapter.notifyItemInserted(position);
+
+                        expenseDB.addNewExpense(expenseModel.getName(), expenseModel.getPrice(), expenseModel.getDescription());
                     }
                 }).show();
             }
